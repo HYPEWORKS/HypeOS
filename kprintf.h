@@ -16,15 +16,11 @@
  * along with HypeOS. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "vga.h"
-#include "kprintf.h"
+#ifndef HYPEOS_KPRINTF_H
+#define HYPEOS_KPRINTF_H
 
-void kernel_main(void) {
-  vga_clearex(VGA_COLOR_WHITE, VGA_COLOR_BLACK);
+void kputc(char c);
+void kputs(const char* s);
+void kprintf(const char* fmt, ...);
 
-  kprintf("HypeOS is going to be lit!\n");
-
-  /* hang */
-  for (;;)
-    __asm__ __volatile__("hlt");
-}
+#endif // HYPEOS_KPRINTF_H

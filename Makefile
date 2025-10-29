@@ -25,7 +25,7 @@ CFLAGS = -O2 -Wall -Wextra -ffreestanding -fno-stack-protector -fno-pic -mno-red
 LDFLAGS = -nostdlib -z max-page-size=0x1000
 ASFLAGS = -m64 -ffreestanding -fno-pic
 
-OBJS = $(BUILD)/boot.o $(BUILD)/kernel.o
+OBJS = $(BUILD)/boot.o $(BUILD)/vga.o $(BUILD)/kprintf.o $(BUILD)/kernel.o
 
 all: $(ISO)
 
@@ -34,6 +34,12 @@ $(BUILD):
 
 $(BUILD)/boot.o: boot.S | $(BUILD)
 	$(AS) $(ASFLAGS) -c $< -o $@
+
+$(BUILD)/vga.o: vga.c vga.h | $(BUILD)
+	$(CC) $(CFLAGS) -std=c11 -c $< -o $@
+
+$(BUILD)/kprintf.o: kprintf.c kprintf.h | $(BUILD)
+	$(CC) $(CFLAGS) -std=c11 -c $< -o $@
 
 $(BUILD)/kernel.o: kernel.c | $(BUILD)
 	$(CC) $(CFLAGS) -std=c11 -c $< -o $@
